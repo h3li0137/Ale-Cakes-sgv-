@@ -91,6 +91,12 @@ public class DescontoController {
     }
 
     // Endpoint para excluir um desconto
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/excluir/{id}")
     public String excluirDesconto(@PathVariable Long id) {
         // Exclui o desconto pelo id
