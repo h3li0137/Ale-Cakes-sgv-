@@ -1,3 +1,4 @@
+
 package br.com.sgv.model;
 
 import jakarta.persistence.Entity;

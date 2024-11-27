@@ -30,7 +30,6 @@ public class CustomUserDetailService implements UserDetailsService {
         if (usuario == null) {
             throw new UsernameNotFoundException(username);
         }
-        UserDetails user = User.withUsername(usuario.getLogin()).password(usuario.getSenha()).roles(usuario.getPapel()).build();
-        return user;
+        return User.withUsername(usuario.getLogin()).password(usuario.getSenha()).roles(usuario.getPapel()).build();
     }
 }

@@ -24,15 +24,51 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     @Size(min = 1, message = "O login precisa ser válido.")
     @Column(unique = true)
     private String login;
+
     private String senha;
     private String papel;
+    private String email; // Adicionando o campo email
 
+    // Campo para o token de redefinição de senha
+    private String passwordResetToken;
+
+    // Método para codificar a senha usando BCrypt
     public void setSenha(String senha) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         this.senha = encoder.encode(senha);
     }
 
+    // Getters e Setters para o campo passwordResetToken
+    public String getPasswordResetToken() {
+        return passwordResetToken;
+    }
+
+    public void setPasswordResetToken(String passwordResetToken) {
+        this.passwordResetToken = passwordResetToken;
+    }
+
+    // Getters e Setters para o campo email
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLogin() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String getSenha() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String[] getPapel() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

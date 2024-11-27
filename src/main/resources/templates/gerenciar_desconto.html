@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Ale Cakes SGV</title>
+
+    <!-- Bootstrap, Fonts and Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #F9F1F0;
+            font-family: 'Poppins', sans-serif;
+            color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #F9C8D5;
+        }
+
+        .navbar-brand {
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-link {
+            color: black !important;
+        }
+
+        .nav-link:hover {
+            background-color: #FFB6B3;
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+            font-family: 'Dancing Script', cursive;
+            font-size: 36px;
+            font-weight: 600;
+            margin-top: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .table {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .btn-info, .btn-danger {
+            font-size: 14px;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .btn-info {
+            background-color: #5bc0de;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-info:hover, .btn-danger:hover {
+            opacity: 0.9;
+        }
+
+        .button {
+            background-color: #FF6F61;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #FF3B2E;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #FF6F61;
+            color: white;
+            font-size: 14px;
+        }
+
+        .modal-header {
+            background-color: #FF6F61;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .modal-body {
+            background-color: #FFF7F6;
+        }
+
+        .modal-footer {
+            background-color: #FF6F61;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="#">Ale Cakes SGV</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="gerenciarNavbarDropdownMenuLink" 
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gerenciar</a>
+                <div class="dropdown-menu" aria-labelledby="gerenciarNavbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/pessoas-juridicas">Pessoas Jurídicas</a>
+                    <a class="dropdown-item" href="/pessoas-fisicas">Pessoas Físicas</a>
+                    <a class="dropdown-item" href="/produtos">Produtos</a>
+                    <a class="dropdown-item" href="/vendas">Vendas</a>
+                    <a class="dropdown-item" href="/descontos">Descontos</a>
+                </div>
+            </li>
+            <!-- Novo item "Conta" ao lado de "Gerenciar" -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="contaNavbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Conta
+                </a>
+                <div class="dropdown-menu" aria-labelledby="contaNavbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Lista de Descontos - Ale Cakes SGV</h1>
+
+    <table id="discountsTable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Código</th>
+                <th>Percentual</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="desconto : ${descontos}" id="discount-[[${desconto.id}]]">
+                <td th:text="${desconto.id}"></td>
+                <td th:text="${desconto.codigo}"></td>
+                <td th:text="${desconto.percentual}"></td>
+                <td>
+                    <a th:href="@{/descontos/excluir/{id}(id=${desconto.id})}" class="btn btn-danger btn-sm" 
+                       onclick="return confirm('Confirma exclusão?')">Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/descontos/novo" class="btn button">Novo Desconto</a>
+</div>
+
+<footer>
+    <p>&copy; 2024 Ale Cakes SGV - Todos os direitos reservados</p>
+</footer>
+
+<!-- Bootstrap and other JS libraries -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- JQuery completo -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Criar ou Editar Desconto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@400&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+       <style>
+        body {
+            background-color: #F9F1F0;
+            font-family: 'Poppins', sans-serif;
+            color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #F9C8D5;
+        }
+
+        .navbar-brand {
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-link {
+            color: black !important;
+        }
+
+        .nav-link:hover {
+            background-color: #FFB6B3;
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+            font-family: 'Dancing Script', cursive;
+            font-size: 36px;
+            font-weight: 600;
+            margin-top: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .table {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .btn-info, .btn-danger {
+            font-size: 14px;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .btn-info {
+            background-color: #5bc0de;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-info:hover, .btn-danger:hover {
+            opacity: 0.9;
+        }
+
+        .button {
+            background-color: #FF6F61;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #FF3B2E;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #FF6F61;
+            color: white;
+            font-size: 14px;
+        }
+
+        .modal-header {
+            background-color: #FF6F61;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .modal-body {
+            background-color: #FFF7F6;
+        }
+
+        .modal-footer {
+            background-color: #FF6F61;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegação (Navbar) -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #f9c8d5;">
+        <a class="navbar-brand" href="#">Ale Cakes SGV</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="gerenciarNavbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gerenciar
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="gerenciarNavbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/pessoas-juridicas">Pessoas Jurídicas</a>
+                        <a class="dropdown-item" href="/pessoas-fisicas">Pessoas Físicas</a>
+                        <a class="dropdown-item" href="/produtos">Produtos</a>
+                        <a class="dropdown-item" href="/vendas">Vendas</a>
+                        <a class="dropdown-item" href="/descontos">Descontos</a>
+                    </div>
+                </li>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="administrarNavbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Administrar
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="administrarNavbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/usuarios">Usuários</a>
+                        </div>
+                    </li>
+                </div>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="contaNavbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Conta
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="contaNavbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/logout">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 th:text="${desconto.id != null ? 'Editar Desconto' : 'Criar Novo Desconto'}"></h1> <!-- Título dinâmico -->
+
+    <div class="form-container">
+        <form th:action="@{${desconto.id != null ? '/descontos/editar' : '/descontos/salvar'}}" th:object="${desconto}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <label for="codigo">Código:</label>
+            <input type="text" th:field="*{codigo}" required />
+
+            <label for="percentual">Percentual:</label>
+            <input type="number" th:field="*{percentual}" step="0.01" required />
+
+            <button type="submit" class="btn btn-primary">
+                <span th:text="${desconto.id != null ? 'Salvar Alterações' : 'Salvar Desconto'}"></span>
+            </button> <!-- Título do botão dinâmico -->
+        </form>
+
+        <a class="back-link" href="/descontos">Voltar para a lista de descontos</a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
