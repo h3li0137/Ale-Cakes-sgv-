@@ -91,7 +91,7 @@ public class UsuarioController {
      * @param id
      * @return 
      */
-    @DeleteMapping("/usuarios/{id}")
+    @PostMapping("/usuarios/{id}")
     public String excluir(@PathVariable("id") long id) {
         // Verifica se o usuário existe antes de excluir
         if (!usuarioRepository.existsById(id)) {

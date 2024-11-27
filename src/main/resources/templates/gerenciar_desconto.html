@@ -9,12 +9,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             background-color: #F9F1F0;
             font-family: 'Poppins', sans-serif;
             color: black;
-            margin: 0;
-            padding: 0;
+            display: flex;
+            flex-direction: column;
         }
 
         .navbar {
@@ -48,6 +54,7 @@
         .container {
             max-width: 1200px;
             margin: 20px auto;
+            flex: 1;  /* Faz o conteúdo preencher o espaço restante */
         }
 
         .table {
@@ -102,6 +109,7 @@
             background-color: #FF6F61;
             color: white;
             font-size: 14px;
+            margin-top: auto; /* Faz o rodapé ir para o final da página */
         }
 
         .modal-header {
@@ -182,9 +190,6 @@
     <a href="/descontos/novo" class="btn button">Novo Desconto</a>
 </div>
 
-<footer>
-   
-</footer>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- JQuery completo -->

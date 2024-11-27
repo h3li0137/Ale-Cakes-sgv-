@@ -101,7 +101,7 @@ public class VendaController {
         return url;
     }
     
-    @DeleteMapping("/vendas/{id}")
+    @PostMapping("/vendas/{id}")
     public String excluir(@PathVariable("id") long id) {
         vendaRepository.deleteById(id);
         return "redirect:/vendas";

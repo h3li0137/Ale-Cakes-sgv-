@@ -53,7 +53,7 @@ public class PessoaJuridicaController {
         return "redirect:/pessoas-juridicas";
     }
 
-    @DeleteMapping("/pessoas-juridicas/{id}")
+    @PostMapping("/pessoas-juridicas/{id}")
     public String excluir(@PathVariable("id") long id) {
         pessoaJuridicaRepository.deleteById(id);
         return "redirect:/pessoas-juridicas";
